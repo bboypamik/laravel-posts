@@ -17,9 +17,4 @@
     @endif
 </div>
 
-<script>
 
-    setTimeout(function () {
-        $('#session-message').remove();
-    }, 3000);
-</script>

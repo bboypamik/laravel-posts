@@ -5,6 +5,8 @@ use App\Http\Controllers\auth\LogoutController;
 use App\Http\Controllers\auth\RegisterController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\PostLikeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,12 +25,18 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'store'])->name('login');
-
 Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
 
 Route::get('/register', [RegisterController::class, 'index'])->name('register');
 Route::post('/register', [RegisterController::class, 'store']);
 
-Route::get('/posts', function () {
-    return view('posts.index');
-});
+
+Route::get('/posts', [PostController::class, 'index'])->name('post');
+Route::post('/posts', [PostController::class, 'store']);
+
+Route::post('/posts/{post}/likes', [PostLikeController::class, 'store'])->name('post.likes');
+Route::delete('/posts/{post}/likes', [PostLikeController::class, 'destroy'])->name('post.likes');
+
+
+
+
