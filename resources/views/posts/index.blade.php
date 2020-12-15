@@ -19,7 +19,7 @@
                         </div>
                         @enderror
                     </div>
-                    <button class="btn btn-primary" type="submit">Submit</button>
+                    <button class="btn btn-primary" type="submit">Post</button>
                 </form>
             @elseif('guest')
                 <div class="font-weigt-bold m-4"><h3>Please login to create posts</h3>
@@ -32,27 +32,37 @@
             @if($posts->count() > 0)
                 @foreach($posts as $post)
                     <div class="list-group-item d-flex justify-content-between">
-                        <div class="font-weight-bold m-2">{{$post->user->username}}</div>
+                        <div class=>
+                            <div class="font-weight-bold m-2">{{$post->user->username}}</div>
+                            <div>{{$post->created_at->diffForHumans()}}</div>
+                        </div>
                         <div class="m-2">
                             {{$post->body}}
-                            <div>
+
+                        </div>
+
+                        <div class=" ">
+
+
+                            @if(auth()->user())
                                 @if(!$post->likedBy(auth()->user()))
-                                <form action="{{route('post.likes', $post)}}" method="post" class="mt-1">
-                                    @csrf
-                                    <button type="submit" class="btn btn-info">Like</button>
-                                </form>
+                                    <form action="{{route('post.likes', $post)}}" method="post" class="mt-1">
+                                        @csrf
+                                        <button type="submit" style="border:none; background-color: transparent; "><i class="far fa-heart fa-lg"></i></button>
+                                    </form>
                                 @else
                                     <form action="{{route('post.likes', $post)}}" method="post" class="mt-1">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-warning">Unlike</button>
+                                        <button type="submit" style="border: none; background-color: transparent; color: red "><i class="fas fa-heart fa-lg"></i></button>
                                     </form>
 
                                 @endif
-                            </div>
+                            @endif
+                                    {{$post->likes->count()}} {{Str::plural('like', $post->likes->count())}}
+
+
                         </div>
-                        <div class="m-2">{{$post->created_at->diffForHumans()}}</div>
-                        <div>{{$post->likes->count()}} {{Str::plural('like', $post->likes->count())}}</div>
                     </div>
 
 

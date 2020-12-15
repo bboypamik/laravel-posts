@@ -30,7 +30,9 @@
     <div class=" d-flex justify-content-between">
         @auth
         <div class="p-3">
-            <a class=" btn btn-light" href="">{{Auth()->user()->username}}</a>
+            <img class="rounded-pill" src="{{asset('/storage/images/'.Auth::user()->avatar)}}" width="40" alt="">
+            <a class=" btn btn-light" href="">
+                {{Auth()->user()->username}}</a>
         </div>
 
         <div class="p-3">
