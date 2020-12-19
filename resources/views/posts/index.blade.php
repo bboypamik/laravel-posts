@@ -6,7 +6,7 @@
     <div class="container mt-4 bg-white w-75 d-flex justify-content-between">
         <div class="w-100 mt-3 mr-5">
             @if(auth()->user())
-                <form action="{{route('post')}}" method="post">
+                <form action="{{route('posts')}}" method="post">
                     @csrf
                     <div class="form-group my-2">
 
@@ -44,25 +44,37 @@
                         <div class=" ">
 
 
-                            @if(auth()->user())
+                            @auth
                                 @if(!$post->likedBy(auth()->user()))
-                                    <form action="{{route('post.likes', $post)}}" method="post" class="mt-1">
+                                    <form action="{{route('like', $post)}}" method="post" class="mt-1">
                                         @csrf
-                                        <button type="submit" style="border:none; background-color: transparent; "><i class="far fa-heart fa-lg"></i></button>
+                                        <button type="submit"
+                                                style="border:none; background-color: transparent; ">
+                                            <i class="far fa-heart fa-lg"></i></button>
                                     </form>
                                 @else
-                                    <form action="{{route('post.likes', $post)}}" method="post" class="mt-1">
+                                    <form action="{{route('dislike', $post)}}" method="post" class="mt-1">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" style="border: none; background-color: transparent; color: red "><i class="fas fa-heart fa-lg"></i></button>
+                                        <button type="submit"
+                                                style="border: none; background-color: transparent; color: red ">
+                                            <i class="fas fa-heart fa-lg"></i></button>
                                     </form>
 
                                 @endif
-                            @endif
-                                    {{$post->likes->count()}} {{Str::plural('like', $post->likes->count())}}
-
+                            @endauth
+                            {{$post->likes->count()}} {{Str::plural('like', $post->likes->count())}}
 
                         </div>
+                        @can('delete', $post)
+                            <form action="{{route('posts.destroy', $post)}}" method="post" class="mt-1">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit"
+                                        style="border: none; background-color: transparent; color: black ">
+                                    <i class="fas fa-times fa-lg"></i></button>
+                            </form>
+                            @endcan
                     </div>
 
 

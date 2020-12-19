@@ -23,7 +23,7 @@
             <a class="btn btn-light" href="{{route('dashboard')}}">Dashboard</a>
         </div>
         <div class="p-3">
-            <a class="btn btn-light" href="{{route('post')}}">Posts</a>
+            <a class="btn btn-light" href="{{route('posts')}}">Posts</a>
         </div>
     </div>
 
